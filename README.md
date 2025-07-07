@@ -31,7 +31,7 @@ A self-elevating PowerShell script that walks through a full suite of repair, cl
 ## Installation
 
 1. Download or copy the contents below into a file named  
-   `Repair-Windows10.ps1`  
+   `repair-windows10.ps1`  
 2. Place the script in any folder where you have write permission  
    (e.g. `C:\Tools\Repair-Windows10\`)  
 
