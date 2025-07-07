@@ -104,5 +104,5 @@ A self-elevating PowerShell script that walks through a full suite of repair, cl
 - **Long DISM/SFC times**
   These tools can take several minutes on slower hardware. Please be patient.
 
-- **License & Disclaimer**
-This script is provided “as-is” without warranty. Use at your own risk. Always back up critical data before running system-level repair tools.
+## License & Disclaimer
+**This script is provided “as-is” without warranty. Use at your own risk. Always back up critical data before running system-level repair tools.**
