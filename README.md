@@ -109,3 +109,5 @@ A self-elevating PowerShell script that walks through a full suite of repair, cl
 
 ## Screenshots
 
+![40p](https://github.com/user-attachments/assets/d6d2fb41-153b-4066-b4ad-5cae7aa507dd)
+
