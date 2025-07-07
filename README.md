@@ -1,116 +1,219 @@
-# Windows 10 One-Click Repair Utility
+# Ultimate Windows 10 Repair & Maintenance Toolkit
 
-A self-elevating PowerShell script that walks through a full suite of repair, cleanup, optimization, and reset steps to restore your Windows 10 installation to near–fresh-install speed, reliability, and stability—without touching or deleting any user data.
+A self-elevating, menu-driven PowerShell script that restores Windows 10 to near–fresh-install performance and reliability while preserving all user data. Packed with diagnostics, backups, repair routines, cleanup tasks, and optional automation.
 
 ---
 
 ## Features
 
-- **Auto-elevation** to Administrator  
-- **Windows Update reset** (services & folders)  
-- **Component store cleanup** (`DISM /StartComponentCleanup /ResetBase`)  
-- **Offline health repair** (`DISM /RestoreHealth`)  
-- **System file verification** (`SFC /scannow`)  
-- **Disk error check** (schedules `CHKDSK /F /R` on next reboot)  
-- **Drive optimization** (defrag + TRIM)  
-- **Temporary file cleanup** (user & system temp, SoftwareDistribution\Download)  
-- **Network stack reset** (Winsock & IP)  
-- **Comprehensive logging** (timestamped transcript)  
-- **CLI progress UI** and final reboot prompt  
+- **Auto-Elevation**  
+  Detects and relaunches as Administrator if needed.
+- **Dry-Run Mode**  
+  Simulate every step without making changes.
+- **Pre- & Post-Repair Health Checks**  
+  • Free disk & memory  
+  • Recent Event Log errors  
+  • DISM component store health
+- **System Restore Point & Registry Backup**  
+  Creates a rollback point and exports SYSTEM & SOFTWARE hives.
+- **Offline/Online DISM Source**  
+  Detects internet status or lets you point to a mounted ISO/USB.
+- **Menu-Driven Task Selection**  
+  • Full-suite “one-click” run  
+  • Custom selection of any combination of 14 modules
+- **Windows Update Reset**  
+  Stops services, renames SoftwareDistribution & Catroot2, restarts services.
+- **Component Store Cleanup**  
+  `DISM /StartComponentCleanup /ResetBase`
+- **DISM RestoreHealth**  
+  Online or `install.wim` source.
+- **SFC /Scannow**  
+  Verifies and repairs protected system files.
+- **CHKDSK Scheduling**  
+  Schedules `chkdsk C: /F /R` on next reboot.
+- **Drive Optimization & TRIM**  
+  Defragmentation + SSD TRIM.
+- **Temp-File Cleanup**  
+  User & system temp, Windows Update download cache, Disk Cleanup pass.
+- **Network Stack Reset**  
+  `netsh winsock reset` & `netsh int ip reset`
+- **Driver Scan/Update Stub**  
+  Placeholder for PnPUtil or third-party driver management.
+- **Store App Re-registration**  
+  Refreshes built-in Microsoft Store apps.
+- **Event Log Analysis & Cleanup**  
+  Counts recent errors and optionally clears the System log.
+- **Log Upload**  
+  Copy transcript to a UNC share or local folder.
+- **Monthly Scheduled Maintenance**  
+  Installs itself as a Scheduled Task to run on the 1st of every month at 3 AM.
+- **Chocolatey/Winget Integration**  
+  Upgrades all installed packages.
+- **Colored CLI UI & ETA Spinner**  
+  Color-coded statuses and spinner for long operations.
+- **Rollback Hooks & Dry-Run Simulation**  
+  Cleanly simulate or roll back individual steps.
+- **PS2EXE Packaging Note**  
+  Guidance to bundle as a standalone `.exe`.
 
 ---
 
 ## Prerequisites
 
-- **Windows 10** (tested on v1607 and later)  
-- **PowerShell 5.1+** (built-in on most Windows 10 systems)  
-- **ExecutionPolicy** set to allow script execution (the script will auto-bypass if needed)  
+- **Windows 10** (build 1607 or later)
+- **PowerShell 5.1+** (built-in)
+- **ExecutionPolicy** allows script execution (the script auto-bypasses if needed)
+- **Administrator** privileges
 
 ---
 
 ## Installation
 
-1. Download or copy the contents below into a file named  
-   `Repair-Windows10.ps1`  
-2. Place the script in any folder where you have write permission  
-   (e.g. `C:\Tools\Repair-Windows10\`)  
+1. **Download** or copy the script into `UltimateRepair.ps1`.
+2. **Place** it in a folder where you have write permissions (e.g. `C:\Tools\UltimateRepair\`).
 
 ---
 
 ## Usage
 
-1. **Run as Administrator**  
-   - Right-click the `.ps1` file → **Run with PowerShell**  
-   - OR open a PowerShell window as Administrator and execute:
-     ```powershell
-     cd "C:\Tools\Repair-Windows10"
-     .\Repair-Windows10.ps1
-     ```
-
-2. **Follow the on-screen prompts**  
-   - Press **Enter** to confirm start  
-   - Watch the progress bar as each repair step runs  
-   - At the end, choose whether to reboot now or later  
-
-3. **Review the log**  
-   - A timestamped transcript (`WindowsRepairLog_YYYYMMDD_HHMMSS.txt`) is saved in the script folder  
-
----
-
-## What It Does
-
-1. **Auto-Elevation**  
-   Ensures full admin rights by restarting itself with elevated privileges.  
-
-2. **Windows Update Reset**  
-   Stops Update services, renames `SoftwareDistribution` & `catroot2` folders (preserving old data), then restarts services.  
-
-3. **Component Store Cleanup**  
-   Runs `DISM /Online /Cleanup-Image /StartComponentCleanup /ResetBase` to reclaim space and remove superseded components.  
-
-4. **DISM RestoreHealth**  
-   Issues `DISM /Online /Cleanup-Image /RestoreHealth` to repair the component store from Windows Update.  
-
-5. **SFC Scan**  
-   Executes `sfc /scannow` to verify and restore protected system files.  
-
-6. **Schedule CHKDSK**  
-   Automatically schedules `chkdsk C: /F /R` on next reboot to fix any underlying disk errors—no user data is modified until reboot.  
-
-7. **Optimize & TRIM**  
-   Uses `Optimize-Volume` to defragment and TRIM the system volume for peak performance.  
-
-8. **Temporary File Cleanup**  
-   Deletes contents of user & system TEMP folders and Windows Update download cache; runs `CleanMgr.exe /sagerun:1` for additional built-in cleanup.  
-
-9. **Network Reset**  
-   Resets Winsock catalog and TCP/IP stack via `netsh winsock reset` and `netsh int ip reset`.  
-
-10. **Logging & Reboot Prompt**  
-    Captures all console output to a timestamped log file and prompts you to reboot when finished.  
+1. **Run As Administrator**
+    - Right-click `UltimateRepair.ps1` → **Run with PowerShell**
+    - OR launch PowerShell as Administrator and:
+      ```powershell
+      cd "C:\Tools\UltimateRepair"
+      .\UltimateRepair.ps1
+      ```
+2. **Choose Mode**
+    - **Full Suite**: run every module
+    - **Custom Selection**: pick specific tasks by number
+    - **Dry-Run**: preview all actions without changes
+3. **Follow Prompts**
+    - Select offline or online repair source
+    - Confirm pre-repair restore point & registry backup
+    - (If custom) choose desired modules
+    - Supply any paths (e.g. log upload destination) when prompted
+4. **Monitor Progress**
+    - Colorful status messages and spinner for long-running steps
+    - Progress bar percent complete
+5. **Review Summary**
+    - Pre- vs. post-repair health metrics with deltas
+    - Log file saved as `UltimateRepairLog_YYYYMMDD_HHMMSS.txt` in script folder
+6. **Reboot Prompt**
+    - Choose to reboot immediately or later
 
 ---
 
-## Troubleshooting
+## Parameters
 
-- **Script won’t run**  
-  Ensure PowerShell execution policy allows script execution. You can bypass policy with:
+- `-DryRun`  
+  Simulates all actions. No changes are made; helpful for testing or audit.
+
+---
+
+## Customization & Packaging
+
+- **PS2EXE**
   ```powershell
-  powershell -ExecutionPolicy Bypass -File .\Repair-Windows10.ps1
-
-- **Permission errors**
-  Make sure you launched PowerShell as Administrator.
-
-- **Long DISM/SFC times**
-  These tools can take several minutes on slower hardware. Please be patient.
-
-## Screenshots
-
-![40p](https://github.com/user-attachments/assets/d6d2fb41-153b-4066-b4ad-5cae7aa507dd)
-
-![50p](https://github.com/user-attachments/assets/4c30e006-79df-4879-afde-532c711b0121)
+  ps2exe -inputFile UltimateRepair.ps1 -outputFile UltimateRepair.exe
 
 ---
-## License & Disclaimer
-**This script is provided “as-is” without warranty. Use at your own risk. Always back up critical data before running system-level repair tools.**
 
+---
+
+---
+Ultimate Windows 10 Repair & Maintenance Toolkit
+
+A self-elevating, menu-driven PowerShell script that restores Windows 10 to near–fresh-install performance and reliability while preserving all user data. Packed with diagnostics, backups, repair routines, cleanup tasks, and optional automation.
+
+Features
+--------
+- Auto-Elevation: Detects and relaunches as Administrator if needed.
+- Dry-Run Mode: Simulate every step without making changes.
+- Pre- & Post-Repair Health Checks:
+  • Free disk & memory
+  • Recent Event Log errors
+  • DISM component store health
+- System Restore Point & Registry Backup: Creates a rollback point and exports SYSTEM & SOFTWARE hives.
+- Offline/Online DISM Source: Detects internet status or lets you point to a mounted ISO/USB.
+- Menu-Driven Task Selection:
+  • Full-suite “one-click” run
+  • Custom selection of any combination of 14 modules
+- Windows Update Reset: Stops services, renames SoftwareDistribution & Catroot2, restarts services.
+- Component Store Cleanup: DISM /StartComponentCleanup /ResetBase
+- DISM RestoreHealth: Online or install.wim source.
+- SFC /Scannow: Verifies and repairs protected system files.
+- CHKDSK Scheduling: Schedules chkdsk C: /F /R on next reboot.
+- Drive Optimization & TRIM: Defragmentation + SSD TRIM.
+- Temp-File Cleanup: User & system temp, Windows Update download cache, Disk Cleanup pass.
+- Network Stack Reset: netsh winsock reset & netsh int ip reset
+- Driver Scan/Update Stub: Placeholder for PnPUtil or third-party driver management.
+- Store App Re-registration: Refreshes built-in Microsoft Store apps.
+- Event Log Analysis & Cleanup: Counts recent errors and optionally clears the System log.
+- Log Upload: Copy transcript to a UNC share or local folder.
+- Monthly Scheduled Maintenance: Installs itself as a Scheduled Task to run on the 1st of every month at 3 AM.
+- Chocolatey/Winget Integration: Upgrades all installed packages.
+- Colored CLI UI & ETA Spinner: Color-coded statuses and spinner for long operations.
+- Rollback Hooks & Dry-Run Simulation: Cleanly simulate or roll back individual steps.
+- PS2EXE Packaging Note: Guidance to bundle as a standalone .exe.
+
+Prerequisites
+-------------
+- Windows 10 (build 1607 or later)
+- PowerShell 5.1+ (built-in)
+- ExecutionPolicy allows script execution (the script auto-bypasses if needed)
+- Administrator privileges
+
+Installation
+------------
+1. Download or copy the script into `UltimateRepair.ps1`.
+2. Place it in a folder where you have write permissions (e.g. C:\Tools\UltimateRepair\).
+
+Usage
+-----
+1. Run As Administrator:
+    - Right-click `UltimateRepair.ps1` → Run with PowerShell
+    - OR launch PowerShell as Administrator and:
+      cd "C:\Tools\UltimateRepair"
+      .\UltimateRepair.ps1
+2. Choose Mode:
+    - Full Suite: run every module
+    - Custom Selection: pick specific tasks by number
+    - Dry-Run: preview all actions without changes
+3. Follow Prompts:
+    - Select offline or online repair source
+    - Confirm pre-repair restore point & registry backup
+    - (If custom) choose desired modules
+    - Supply any paths (e.g. log upload destination) when prompted
+4. Monitor Progress:
+    - Colorful status messages and spinner for long-running steps
+    - Progress bar percent complete
+5. Review Summary:
+    - Pre- vs. post-repair health metrics with deltas
+    - Log file saved as UltimateRepairLog_YYYYMMDD_HHMMSS.txt in script folder
+6. Reboot Prompt:
+    - Choose to reboot immediately or later
+
+Parameters
+----------
+- -DryRun: Simulates all actions. No changes are made; helpful for testing or audit.
+
+Customization & Packaging
+-------------------------
+- PS2EXE:
+  ps2exe -inputFile UltimateRepair.ps1 -outputFile UltimateRepair.exe
+- Extend Driver Updates: Integrate PnPUtil commands or third-party driver management modules.
+- Modify Scheduled Task: Adjust the trigger by editing the Install-ScheduledMaintenance function.
+
+Troubleshooting
+---------------
+- Execution Policy Errors:
+  Run with -ExecutionPolicy Bypass, or configure via:
+  Set-ExecutionPolicy RemoteSigned -Scope LocalMachine
+- Permission Denied:
+  Ensure you launched PowerShell as Administrator.
+- Long Repair Times:
+  DISM and SFC can take 10–30 minutes on slower hardware—please be patient.
+
+License & Disclaimer
+--------------------
+This script is provided “as-is” without warranty. Use at your own risk. Always back up important data before running system-level repairs.
