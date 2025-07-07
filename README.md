@@ -106,3 +106,6 @@ A self-elevating PowerShell script that walks through a full suite of repair, cl
 
 ## License & Disclaimer
 **This script is provided “as-is” without warranty. Use at your own risk. Always back up critical data before running system-level repair tools.**
+
+## Screenshots
+
