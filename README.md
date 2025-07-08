@@ -106,9 +106,17 @@ A self-elevating PowerShell script that walks through a full suite of repair, cl
 
 ## Screenshots
 
-![40p](https://github.com/user-attachments/assets/d6d2fb41-153b-4066-b4ad-5cae7aa507dd)
+![1](https://github.com/user-attachments/assets/04b09697-29bf-48f4-96e2-406b497853c1)
 
-![50p](https://github.com/user-attachments/assets/4c30e006-79df-4879-afde-532c711b0121)
+![2](https://github.com/user-attachments/assets/0d174666-3b2f-4563-b4fb-84c2b3e58bd6)
+
+![4](https://github.com/user-attachments/assets/75d9a3cb-55dc-4398-b047-cad24b94df7f)
+
+![5](https://github.com/user-attachments/assets/027842b8-63c2-4ec9-a274-e146ba130754)
+
+![6](https://github.com/user-attachments/assets/ad3792da-1f2d-4020-90a0-5849189bf4ed)
+
+![7](https://github.com/user-attachments/assets/d0cc6953-2753-4a58-9715-a9c56da55995)
 
 ---
 ## License & Disclaimer
